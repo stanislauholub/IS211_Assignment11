@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Stan | To Do List</title>
+    <link type='text/css' href='{{ url_for('static', filename='style.css') }}' rel='stylesheet'>
+
+</head>
+
+<body>
+
+      {% with messages = get_flashed_messages() %}
+         {% if messages %}
+            <ul>
+               {% for message in messages %}
+               <h4><i>{{ message }}</i></h4>
+               {% endfor %}
+            </ul>
+         {% endif %}
+      {% endwith %}
+
+    <div class="row">
+
+        <div class="column">
+            <h2>To Do List</h2>
+            <table style="width:100%" method="GET">
+                <tr>
+
+                    <th>Task</th>
+                    <th>Email</th>
+                    <th>Priority</th>
+                    <th>Action</th>
+                    {%for i in range(0, len)%}
+                    <tr>
+                        <td> {{ mylist[i][0] }} </td>
+                        <td> {{ mylist[i][1] }} </td>
+                        <td> {{ mylist[i][2] }} </td>
+                        <td>
+                            <form action="/delete" method="post">
+                                <input type="hidden" name="id_delete" value={{mylist[i][3]}}>
+                                <input type="submit" value="Delete" class="btn btn-danger">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </table>
+        </div>
+        <div class="column">
+
+            <form action='/submit' method="POST">
+                <h2 class="heading">Entering Form</h2>
+                <div style="display: flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label for="task">Task:</label>
+                    <br>
+                    <input type="text" name="task" id="task">
+                    <br>
+                </div>
+                <div style="display: flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label for="email">Email: </label>
+                    <br>
+                    <input type="text" name="email" id="email">
+                </div>
+                <div style="display: flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label for="priority">Priority: </label>
+                    <br>
+                    <select id="priority" name="priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+                <input class="button" type="submit" value="Add To Do Item">
+            </form>
+            <br>
+            <form class="button1" action='/clear' method="POST">
+                <input type="Submit" value="clear">
+            </form>
+            </form>
+            <form class="button2" action='/save' method="POST">
+                <input type="Submit" value="save">
+            </form>
+            </form>
+            </form>
+        </div>
+
+    </div>
+</body>
+
+</html>
